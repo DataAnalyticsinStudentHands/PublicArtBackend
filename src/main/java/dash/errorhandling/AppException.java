@@ -6,7 +6,8 @@ package dash.errorhandling;
  */
 public class AppException extends Exception {
 
-	
+	private static final long serialVersionUID = -8999932578270387947L;
+
 	/**
 	 * contains redundantly the HTTP status of the response sent back to the client in case of error, so that
 	 * the developer does not have to look into the response headers. If null a default

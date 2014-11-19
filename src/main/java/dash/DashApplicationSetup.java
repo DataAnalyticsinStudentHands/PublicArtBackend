@@ -1,7 +1,5 @@
 package dash;
 
-import java.lang.annotation.Annotation;
-
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.message.filtering.EntityFilteringFeature;
@@ -13,9 +11,9 @@ import dash.errorhandling.GenericExceptionMapper;
 import dash.errorhandling.NotFoundExceptionMapper;
 import dash.filters.LoggingResponseFilter;
 import dash.pojo.ArtObjectResource;
-import dash.pojo.ArtObjectDetailedView;
-import dash.pojo.UserDetailedView;
+import dash.pojo.SampleObjectResource;
 import dash.pojo.UsersResource;
+
 
 /**
  * Registers the components to be used by the JAX-RS application
@@ -31,6 +29,7 @@ public class DashApplicationSetup extends ResourceConfig {
 	public DashApplicationSetup() {
 		// register application resources
 		register(UsersResource.class);
+		register(SampleObjectResource.class);
 		register(ArtObjectResource.class);
 
 		// register filters
@@ -46,13 +45,6 @@ public class DashApplicationSetup extends ResourceConfig {
 		register(JacksonFeature.class);
 		register(MultiPartFeature.class);
 		register(EntityFilteringFeature.class);
-
-		property(EntityFilteringFeature.ENTITY_FILTERING_SCOPE,
-				new Annotation[] { UserDetailedView.Factory.get() });
-		
-		property(EntityFilteringFeature.ENTITY_FILTERING_SCOPE,
-				new Annotation[] { ArtObjectDetailedView.Factory.get() });
 	}
 }
 
-// This is a test comment. Please work.

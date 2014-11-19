@@ -39,9 +39,14 @@
     <bean id="userService" class="dash.service.UserServiceDbAccessImpl" />	
     <bean id="userResource" class="dash.pojo.UsersResource" />
     
-    <bean id="artObjectDao" class="dash.dao.ArtObjectDaoJPA2Impl"/>	
+    <bean id="sampleObjectDao" class="dash.dao.SampleObjectDaoJPA2Impl"/>
+    <bean id="sampleObjectService" class="dash.service.SampleObjectServiceDbAccessImpl" />	
+    <bean id="sampleObjectResource" class="dash.pojo.SampleObjectResource" />
+    
+    <bean id="artObjectDao" class="dash.dao.ArtObjectDaoJPA2Impl"/>
     <bean id="artObjectService" class="dash.service.ArtObjectServiceDbAccessImpl" />	
     <bean id="artObjectResource" class="dash.pojo.ArtObjectResource" />
+    
     <bean id="aclController" class="dash.security.GenericAclController"/>
     
 	<bean id="dashDS" class="org.springframework.jndi.JndiObjectFactoryBean" scope="singleton">

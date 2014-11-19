@@ -3,7 +3,6 @@
 	<modelVersion>4.0.0</modelVersion>
 	<version>0.0.1</version>
 	<groupId>RESTFUL-WS</groupId>
-	<artifactId>ArtApp</artifactId>
 	<packaging>war</packaging>
 	<name>RESTFUL-WS</name>
 	<description>REST-FUL web services for DASH backend</description>
@@ -146,13 +145,21 @@
 		</dependency>
 
 		<!-- Spring ACL (c3p0 may be temporary) -->
+
 	    <dependency>
 	    	<groupId>net.sf.ehcache</groupId>
 	    	<artifactId>ehcache-core</artifactId>
 	    	<version>2.3.1</version>
 	    	<type>jar</type>
 	    	<scope>compile</scope>
+	    	<exclusions>
+	    		<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
 	    </dependency>
+	    
 
 		<!-- ******* JPA/Hibernate ******** -->
 		<dependency>
@@ -191,20 +198,6 @@
 			<artifactId>jcl-over-slf4j</artifactId>     
 			<version>${jcloverslf4j.version}</version>  
 		</dependency>
-		<dependency>
-	    	<groupId>org.slf4j</groupId>
-	    	<artifactId>slf4j-api</artifactId>
-	    	<version>${jcloverslf4j.version}</version>
-	    	<type>jar</type>
-	    	<scope>compile</scope>
-	    </dependency>
-		<dependency>
-	    	<groupId>org.slf4j</groupId>
-	    	<artifactId>slf4j-log4j12</artifactId>
-	    	<version>${jcloverslf4j.version}</version>
-	    	<type>jar</type>
-	    	<scope>compile</scope>
-	    </dependency>
 
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
@@ -266,10 +259,9 @@
           <skipTests>true</skipTests>
         </configuration>
       </plugin>
-      
-      
     		
 		</plugins>
 	</build>
 	
+	<artifactId>ArtManagementApp</artifactId>
 </project>  

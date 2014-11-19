@@ -35,6 +35,7 @@ public class UserEntity implements Serializable {
 	@Column(name = "username")
 	private String username;
 
+
 	/** firstname of the user */
 	@Column(name = "firstName")
 	private String firstName;

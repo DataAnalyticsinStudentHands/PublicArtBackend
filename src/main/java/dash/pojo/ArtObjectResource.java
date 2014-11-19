@@ -69,9 +69,7 @@ public class ArtObjectResource {
 		return Response
 				.status(200)
 				.entity(new GenericEntity<ArtObject>(artObjectById) {
-				},
-				detailed ? new Annotation[] { ArtObjectDetailedView.Factory
-						.get() } : new Annotation[0])
+				})
 						.header("Access-Control-Allow-Headers", "X-extra-header")
 						.allow("OPTIONS").build();
 	}
