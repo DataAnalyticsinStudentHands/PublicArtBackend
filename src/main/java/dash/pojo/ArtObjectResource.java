@@ -1,12 +1,14 @@
 package dash.pojo;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -16,11 +18,16 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import dash.errorhandling.AppException;
+import dash.filters.AppConstants;
 import dash.service.ArtObjectService;
 
 /**
@@ -146,5 +153,75 @@ public class ArtObjectResource {
 		return Response.status(Response.Status.NO_CONTENT)// 204
 				.entity("All art objects have been removed").build();
 	}
+
+	/**********************************
+	********    FILE UPLOAD    ********
+	**********************************/
+
+	@POST
+	@Path("/upload")
+	@Consumes({ MediaType.MULTIPART_FORM_DATA })
+	public Response uploadFile(
+			@QueryParam("id") Long id,
+			@FormDataParam("file") InputStream uploadedInputStream,
+			@FormDataParam("file") FormDataContentDisposition fileDetail,
+			@HeaderParam("Content-Length") final long fileSize) throws AppException {
+
+		ArtObject artObject= artObjectService.getArtObjectById(id);
+
+		//TODO: Generate directory if not set
+		//if(application.getDocument_folder()==null)	
+		String uploadedFileLocation = AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER+"/"
+				+ artObject.getId()+"/" + fileDetail.getFileName().replaceAll("%20", "_").toLowerCase();
+				// save it
+				artObjectService.uploadFile(uploadedInputStream, uploadedFileLocation);
+
+		String output = "File uploaded to : " + uploadedFileLocation;
+
+		return Response.status(200).entity(output).build();
+
+	}
+
+	@GET
+	@Path("/upload")
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
+	public Response getFileNames(@QueryParam("id") Long id) throws AppException{
 	
+		ArtObject artObject= artObjectService.getArtObjectById(id);
+		JaxbList<String> fileNames=new JaxbList<String>(artObjectService.getFileNames(artObject));
+		return Response.status(200).entity(fileNames).build();
+	}
+	
+	@DELETE
+	@Path("/upload")
+	public Response deleteUpload(
+			@QueryParam("id") Long id,
+			@QueryParam("fileName") String fileName) throws AppException{
+		
+		ArtObject artObject= artObjectService.getArtObjectById(id);
+		
+		String uploadedFileLocation = AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER + "/" + artObject.getId()+"/" + fileName;
+		// save it
+		artObjectService.deleteUploadFile(uploadedFileLocation);
+ 
+		String output = "File removed from: " + uploadedFileLocation;
+		
+		return Response.status(200).entity(output).build();
+	}
+	
+	@XmlRootElement(name="fileNames")
+	public static class JaxbList<T>{
+	    protected List<T> list;
+
+	    public JaxbList(){}
+
+	    public JaxbList(List<T> list){
+	    	this.list=list;
+	    }
+
+	    @XmlElement(name="fileName")
+	    public List<T> getList(){
+	    	return list;
+	    }
+	}
 }

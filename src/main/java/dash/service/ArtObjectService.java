@@ -1,5 +1,6 @@
 package dash.service;
 
+import java.io.InputStream;
 import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,7 +14,11 @@ public interface ArtObjectService {
 	 *
 	 *Create a new art object and set the current user as owner and manager.
 	 */
-	public Long createArtObject(ArtObject artObject) throws AppException;	
+	public Long createArtObject(ArtObject artObject) throws AppException;
+	
+	@PreAuthorize("hasPermission(#smapleObject, 'write') or hasRole('ROLE_ADMIN')")
+	public void uploadFile(InputStream uploadedInputStream,
+			String uploadedFileLocation) throws AppException;
 
 	/*
 	 * ******************* Read related methods ********************
@@ -59,7 +64,10 @@ public interface ArtObjectService {
 	 * Functional but does not destroy old acl's which doesnt hurt anything
 	 * but they will take up space if this is commonly used */
 	@PreAuthorize("hasRole('ROLE_ROOT')")
-	public void deleteArtObjects();	
+	public void deleteArtObjects();
+	
+	@PreAuthorize("hasPermission(#sampleObject, 'delete') or hasRole('ROLE_ADMIN')")
+	public void deleteUploadFile(String uploadedFileLocation) throws AppException;
 
 	/*
 	 * ******************** Helper methods **********************
@@ -68,5 +76,8 @@ public interface ArtObjectService {
 	// private/protected. Redundant
 	// Could be made a boolean so it was not a security vulnerability
 	public ArtObject verifyArtObjectExistenceById(Long id);	
+	
+	@PreAuthorize("hasPermission(#artObject, 'read') or hasRole('ROLE_ADMIN')")
+	public List<String> getFileNames(ArtObject artObject);
 
 }
