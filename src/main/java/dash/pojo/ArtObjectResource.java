@@ -168,13 +168,17 @@ public class ArtObjectResource {
 			@HeaderParam("Content-Length") final long fileSize) throws AppException {
 
 		ArtObject artObject= artObjectService.getArtObjectById(id);
+		
+	
 
 		//TODO: Generate directory if not set
 		//if(application.getDocument_folder()==null)	
 		String uploadedFileLocation = AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER+"/"
 				+ artObject.getId()+"/" + fileDetail.getFileName().replaceAll("%20", "_").toLowerCase();
-				// save it
-				artObjectService.uploadFile(uploadedInputStream, uploadedFileLocation);
+		
+		System.out.println("Upload file location: " + uploadedFileLocation);
+		// save it
+		artObjectService.uploadFile(uploadedInputStream, uploadedFileLocation);
 
 		String output = "File uploaded to : " + uploadedFileLocation;
 

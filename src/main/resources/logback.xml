@@ -14,10 +14,11 @@
 
 	<appender name="FILE"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>/var/log/tomcat7/rest-dash.log</file>
+		<file>/var/log/tomcat7/artapp-backend.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- daily rollover -->
-			<fileNamePattern>rest-dash.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>artapp-backend.%d{yyyy-MM-dd}.log</fileNamePattern>
+
 			<!-- keep 30 days' worth of history -->
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
@@ -30,6 +31,11 @@
 	<logger name="dash" additivity="false">
 		<level value="DEBUG" />
 		<appender-ref ref="FILE" />
+	</logger>
+	<!-- Suppress Info from other libraries -->
+	<logger name="org.hibernate">
+		<level value="WARN" />
+		<appender-ref ref="STDOUT" />
 	</logger>
 
 	<root>
