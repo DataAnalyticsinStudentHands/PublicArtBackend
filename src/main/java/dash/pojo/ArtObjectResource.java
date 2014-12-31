@@ -56,6 +56,17 @@ public class ArtObjectResource {
 								+ String.valueOf(createArtObjectId)).build();
 	}
 	
+	@POST
+	@Path("/list")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.TEXT_HTML })
+	public Response createArtObjects(List<ArtObject> artObjects) throws AppException {
+		artObjectService.createArtObjects(artObjects);
+		return Response.status(Response.Status.CREATED)
+				// 201
+				.entity("A new art object has been created").build();
+	}
+	
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public List<ArtObject> getArtObjects(

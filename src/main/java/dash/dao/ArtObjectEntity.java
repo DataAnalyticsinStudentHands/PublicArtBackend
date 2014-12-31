@@ -2,6 +2,7 @@ package dash.dao;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -36,10 +37,10 @@ public class ArtObjectEntity implements Serializable {
 	private String availability;
 	
 	@Column(name = "location_lat")
-	private float location_lat;
+	private BigDecimal location_lat;
 	
 	@Column(name = "location_long")
-	private float location_long;
+	private BigDecimal location_long;
 	
 	@Column(name = "artist_name")
 	private String artist_name;
@@ -100,7 +101,7 @@ public class ArtObjectEntity implements Serializable {
 
 	public ArtObjectEntity(){}
 
-	public ArtObjectEntity(Long id, String title, String availability, float location_lat, float 	location_long, String artist_name,
+	public ArtObjectEntity(Long id, String title, String availability, BigDecimal location_lat, BigDecimal 	location_long, String artist_name,
 			Date artist_dob, String	artist_pob, String medium, String artist_website, String dimensions, Date date_made,
 			int mon_value, String location_campus, String location_name, boolean indoor, int counter, String type, String shape,
 			String color, String art_movement, String description, String image, String	tags) {
@@ -167,19 +168,19 @@ public class ArtObjectEntity implements Serializable {
 		this.availability = availability;
 	}
 
-	public float getLocation_lat() {
+	public BigDecimal getLocation_lat() {
 		return location_lat;
 	}
 
-	public void setLocation_lat(float location_lat) {
+	public void setLocation_lat(BigDecimal location_lat) {
 		this.location_lat = location_lat;
 	}
 
-	public float getLocation_long() {
+	public BigDecimal getLocation_long() {
 		return location_long;
 	}
 
-	public void setLocation_long(float location_long) {
+	public void setLocation_long(BigDecimal location_long) {
 		this.location_long = location_long;
 	}
 

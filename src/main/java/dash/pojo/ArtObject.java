@@ -12,6 +12,7 @@ import dash.security.IAclObject;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -33,10 +34,10 @@ public class ArtObject implements  Serializable, IAclObject {
 	private String availability;
 	
 	@XmlElement(name = "location_lat")
-	private float location_lat;
+	private BigDecimal location_lat;
 	
 	@XmlElement(name = "location_long")
-	private float location_long;
+	private BigDecimal location_long;
 	
 	@XmlElement(name = "artist_name")
 	private String artist_name;
@@ -97,7 +98,7 @@ public class ArtObject implements  Serializable, IAclObject {
 	
 	public ArtObject(){}
 	
-	public ArtObject(Long id, String title, String availability, float location_lat, float 	location_long, String artist_name,
+	public ArtObject(Long id, String title, String availability, BigDecimal location_lat, BigDecimal 	location_long, String artist_name,
 			Date artist_dob, String	artist_pob, String medium, String artist_website, String dimensions, Date date_made,
 			int mon_value, String location_campus, String location_name, boolean indoor, int counter, String type, String shape,
 			String color, String art_movement, String description, String image, String	tags) {
@@ -169,19 +170,19 @@ public class ArtObject implements  Serializable, IAclObject {
 		this.availability = availability;
 	}
 	
-	public float getLocation_lat() {
+	public BigDecimal getLocation_lat() {
 		return location_lat;
 	}
 
-	public void setLocation_lat(float location_lat) {
+	public void setLocation_lat(BigDecimal location_lat) {
 		this.location_lat = location_lat;
 	}		
 
-	public float getLocation_long() {
+	public BigDecimal getLocation_long() {
 		return location_long;
 	}
 
-	public void setLocation_long(float location_long) {
+	public void setLocation_long(BigDecimal location_long) {
 		this.location_long = location_long;
 	}
 

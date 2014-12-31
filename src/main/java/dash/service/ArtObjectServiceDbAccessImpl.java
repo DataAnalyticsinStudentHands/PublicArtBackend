@@ -75,6 +75,14 @@ ArtObjectService {
 		
 		return artObjectId;
 	}
+	
+	@Override
+	@Transactional
+	public void createArtObjects(List<ArtObject> artObjects) throws AppException {
+		for(ArtObject obj : artObjects) {
+			updatePartiallyArtObject(obj);
+		}
+	}
 
 	private void validateInputForCreation(ArtObject artObject) throws AppException {
 		if (artObject.getTitle() == null) {

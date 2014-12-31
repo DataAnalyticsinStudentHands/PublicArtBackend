@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 import dash.errorhandling.AppException;
 import dash.pojo.ArtObject;
+import dash.pojo.User;
 
 public interface ArtObjectService {
 	/*
@@ -15,6 +16,9 @@ public interface ArtObjectService {
 	 *Create a new art object and set the current user as owner and manager.
 	 */
 	public Long createArtObject(ArtObject artObject) throws AppException;
+
+	@PreAuthorize("hasRole('ROLE_ROOT')")
+	public void createArtObjects(List<ArtObject> artObject) throws AppException;
 	
 	@PreAuthorize("hasPermission(#smapleObject, 'write') or hasRole('ROLE_ADMIN')")
 	public void uploadFile(InputStream uploadedInputStream,
