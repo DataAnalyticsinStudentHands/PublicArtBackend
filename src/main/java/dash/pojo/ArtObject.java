@@ -43,7 +43,7 @@ public class ArtObject implements  Serializable, IAclObject {
 	private String artist_name;
 	
 	@XmlElement(name = "artist_dob")
-	private Date artist_dob;
+	private String artist_dob;
 	
 	@XmlElement(name = "artist_pob")
 	private String artist_pob;
@@ -58,7 +58,7 @@ public class ArtObject implements  Serializable, IAclObject {
 	private String dimensions;
 	
 	@XmlElement(name = "date_made")
-	private Date date_made;
+	private String date_made;
 	
 	@XmlElement(name = "mon_value")
 	private int mon_value;
@@ -99,7 +99,7 @@ public class ArtObject implements  Serializable, IAclObject {
 	public ArtObject(){}
 	
 	public ArtObject(Long id, String title, String availability, BigDecimal location_lat, BigDecimal 	location_long, String artist_name,
-			Date artist_dob, String	artist_pob, String medium, String artist_website, String dimensions, Date date_made,
+			String artist_dob, String	artist_pob, String medium, String artist_website, String dimensions, String date_made,
 			int mon_value, String location_campus, String location_name, boolean indoor, int counter, String type, String shape,
 			String color, String art_movement, String description, String image, String	tags) {
 		super();
@@ -194,11 +194,11 @@ public class ArtObject implements  Serializable, IAclObject {
 		this.artist_name = artist_name;
 	}
 
-	public Date getArtist_dob() {
+	public String getArtist_dob() {
 		return artist_dob;
 	}
 
-	public void setArtist_dob(Date artist_dob) {
+	public void setArtist_dob(String artist_dob) {
 		this.artist_dob = artist_dob;
 	}
 
@@ -234,11 +234,11 @@ public class ArtObject implements  Serializable, IAclObject {
 		this.dimensions = dimensions;
 	}
 
-	public Date getDate_made() {
+	public String getDate_made() {
 		return date_made;
 	}
 
-	public void setDate_made(Date date_made) {
+	public void setDate_made(String date_made) {
 		this.date_made = date_made;
 	}
 
