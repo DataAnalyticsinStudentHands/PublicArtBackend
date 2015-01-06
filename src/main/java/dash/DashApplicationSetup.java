@@ -12,6 +12,7 @@ import dash.errorhandling.NotFoundExceptionMapper;
 import dash.filters.LoggingResponseFilter;
 import dash.pojo.ArtObjectResource;
 import dash.pojo.SampleObjectResource;
+import dash.pojo.TourResource;
 import dash.pojo.UsersResource;
 
 
@@ -31,6 +32,7 @@ public class DashApplicationSetup extends ResourceConfig {
 		register(UsersResource.class);
 		register(SampleObjectResource.class);
 		register(ArtObjectResource.class);
+		register(TourResource.class);
 
 		// register filters
 		register(RequestContextFilter.class);

@@ -47,6 +47,10 @@
     <bean id="artObjectService" class="dash.service.ArtObjectServiceDbAccessImpl" />	
     <bean id="artObjectResource" class="dash.pojo.ArtObjectResource" />
     
+    <bean id="tourDao" class="dash.dao.TourDaoJPA2Impl"/>
+    <bean id="tourService" class="dash.service.TourServiceDbAccessImpl" />	
+    <bean id="tourResource" class="dash.pojo.TourResource" />
+    
     <bean id="aclController" class="dash.security.GenericAclController"/>
     
 	<bean id="dashDS" class="org.springframework.jndi.JndiObjectFactoryBean" scope="singleton">
