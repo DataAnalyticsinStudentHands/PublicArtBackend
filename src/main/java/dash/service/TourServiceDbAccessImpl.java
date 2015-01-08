@@ -1,5 +1,6 @@
 package dash.service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
@@ -97,5 +98,58 @@ public class TourServiceDbAccessImpl extends ApplicationObjectSupport implements
 		}
 
 		return response;
+	}
+	
+	@Override
+	@Transactional
+	public void deleteTour(Tour tour) {
+
+		tourDao.deleteTour(tour);
+		aclController.deleteACL(tour);
+
+	}
+	
+	@Override
+	@Transactional
+	public void updatePartiallyTour(Tour tour) throws AppException {
+		//do a validation to verify existence of the resource
+		Tour verifyTourExistenceById = verifyTourExistenceById(tour.getId());
+		if (verifyTourExistenceById == null) {
+			throw new AppException(Response.Status.NOT_FOUND.getStatusCode(),
+					404,
+					"The resource you are trying to update does not exist in the database",
+					"Please verify existence of data in the database for the id - "
+							+ tour.getId(), AppConstants.DASH_POST_URL);
+		}
+		copyPartialProperties(verifyTourExistenceById, tour);
+		tourDao.updateTour(new TourEntity(verifyTourExistenceById));
+
+	}
+	
+	@Override
+	// TODO: This doesn't need to exist. It is the exact same thing as
+	// getArtObjectById(Long)
+	public Tour verifyTourExistenceById(Long id) {
+		TourEntity tourById = tourDao.getTourById(id);
+		if (tourById == null) {
+			return null;
+		} else {
+			return new Tour(tourById);
+		}
+	}
+	
+	private void copyPartialProperties(Tour verifyTourExistenceById, Tour tour) {
+
+		BeanUtilsBean notNull=new NullAwareBeanUtilsBean();
+		try {
+			notNull.copyProperties(verifyTourExistenceById, tour);
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 }

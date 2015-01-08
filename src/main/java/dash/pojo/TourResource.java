@@ -65,4 +65,31 @@ public class TourResource {
 				orderByTitle);
 		return tours;
 	}
+	
+	@POST
+	@Path("{id}")
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({ MediaType.TEXT_HTML })
+	public Response partialUpdateTour(@PathParam("id") Long id, Tour tour)
+			throws AppException {
+		tour.setTour_id(id);
+		tourService.updatePartiallyTour(tour);
+		return Response
+				.status(Response.Status.OK)
+				// 200
+				.entity("The tour you specified has been successfully updated")
+				.build();
+	}
+	
+	@DELETE
+	@Path("{id}")
+	@Produces({ MediaType.TEXT_HTML })
+	public Response deleteTour(@PathParam("id") Long id)
+			throws AppException {
+		Tour tour= new Tour();
+		tour.setTour_id(id);
+		tourService.deleteTour(tour);
+		return Response.status(Response.Status.NO_CONTENT)// 204
+				.entity("Tour successfully removed from database").build();
+	}
 }

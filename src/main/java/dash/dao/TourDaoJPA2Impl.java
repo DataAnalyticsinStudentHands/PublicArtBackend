@@ -7,6 +7,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
+import dash.pojo.Tour;
+
 public class TourDaoJPA2Impl implements TourDao {
 
 	@PersistenceContext(unitName = "dashPersistence")
@@ -52,5 +54,32 @@ public class TourDaoJPA2Impl implements TourDao {
 		return tour.getTour_id();
 	}
 
+	@Override
+	public void deleteTour(Tour tourPojo) {
+
+		TourEntity tour = entityManager
+				.find(TourEntity.class, tourPojo.getId());
+		entityManager.remove(tour);
+	}
 	
+	@Override
+	public void updateTour(TourEntity tour) {
+		//TODO think about partial update and full update
+		entityManager.merge(tour);
+	}
+	
+	@Override
+	public TourEntity getTourById(Long id) {
+
+		try {
+			String qlString = "SELECT o FROM TourEntity o WHERE o.tour_id = ?1";
+			TypedQuery<TourEntity> query = entityManager.createQuery(qlString,
+					TourEntity.class);
+			query.setParameter(1, id);
+
+			return query.getSingleResult();
+		} catch (NoResultException e) {
+			return null;
+		}
+	}
 }
