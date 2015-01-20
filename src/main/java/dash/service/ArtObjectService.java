@@ -2,12 +2,12 @@ package dash.service;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Date;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import dash.errorhandling.AppException;
 import dash.pojo.ArtObject;
-import dash.pojo.User;
 
 public interface ArtObjectService {
 	/*
@@ -36,7 +36,7 @@ public interface ArtObjectService {
 	 * @throws AppException
 	 */
 	
-	public List<ArtObject> getArtObjects(String orderByTitle) throws AppException;
+	public List<ArtObject> getArtObjects(String orderByTitle, String updated) throws AppException;
 
 	/**
 	 * Returns a art object given its id

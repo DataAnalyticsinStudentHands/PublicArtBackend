@@ -1,6 +1,7 @@
 package dash.dao;
 
 import java.util.List;
+import java.util.Date;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -17,18 +18,31 @@ ArtObjectDao {
 	private EntityManager entityManager;
 
 	@Override
-	public List<ArtObjectEntity> getArtObjects(String orderByTitle) {
-		String sqlString = null;
-		if(orderByTitle != null){
-			sqlString = "SELECT o FROM ArtObjectEntity o"
-					+ " ORDER BY o.title " + orderByTitle;
-		} else {
-			sqlString = "SELECT o FROM ArtObjectEntity o";
+	public List<ArtObjectEntity> getArtObjects(String orderByTitle, Date updated) {
+		
+		Date maxResult = entityManager.createQuery("SELECT o FROM ArtObjectEntity o WHERE o.last_update = (SELECT MAX(o.last_update) FROM ArtObjectEntity o)",
+				ArtObjectEntity.class).setMaxResults(1).getSingleResult().getLast_update();
+		
+		//Date maxResult = maxQuery.getSingleResult().getLast_update();
+		
+		if(updated==null || maxResult.after(updated)){
+		
+			String sqlString = null;
+			if(orderByTitle != null){
+				sqlString = "SELECT o FROM ArtObjectEntity o"
+						+ " ORDER BY o.title " + orderByTitle;
+			} else {
+				sqlString = "SELECT o FROM ArtObjectEntity o";
+			}
+			TypedQuery<ArtObjectEntity> query = entityManager.createQuery(sqlString,
+					ArtObjectEntity.class);
+	
+			return query.getResultList();
 		}
-		TypedQuery<ArtObjectEntity> query = entityManager.createQuery(sqlString,
-				ArtObjectEntity.class);
-
-		return query.getResultList();
+		else{
+			
+			return null;
+		}
 	}
 
 	@Override
@@ -72,6 +86,8 @@ ArtObjectDao {
 	@Override
 	public Long createArtObject(ArtObjectEntity artObject) {
 
+		artObject.setLast_update(new Date());
+		
 		entityManager.persist(artObject);
 		entityManager.flush();// force insert to receive the id of the user
 
@@ -81,13 +97,16 @@ ArtObjectDao {
 
 	@Override
 	public void updateArtObject(ArtObjectEntity artObject) {
+		
+		artObject.setLast_update(new Date());
+		
 		//TODO think about partial update and full update
 		entityManager.merge(artObject);
 	}
 
 	@Override
 	public void deleteArtObjects() {
-		Query query = entityManager.createNativeQuery("TRUNCATE TABLE users");
+		Query query = entityManager.createNativeQuery("TRUNCATE TABLE artobjects");
 		query.executeUpdate();
 	}
 

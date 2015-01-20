@@ -41,10 +41,14 @@ public class TourEntity implements Serializable {
 	
 	@Column(name = "artistic_attributes")
 	private String artistic_attributes;
+	
+	/** date of last update in the database */
+	@Column(name = "last_update")
+	private Date last_update;
 
 	public TourEntity(Long tour_id, String tour_title, String artwork_included,
 			int times_taken, String creator, String date_created,
-			String artistic_attributes) {
+			String artistic_attributes, Date last_update) {
 		super();
 		this.tour_id = tour_id;
 		this.tour_title = tour_title;
@@ -53,8 +57,9 @@ public class TourEntity implements Serializable {
 		this.creator = creator;
 		this.date_created = date_created;
 		this.artistic_attributes = artistic_attributes;
+		this.last_update = last_update;
 	}
-	
+
 	public TourEntity(){}
 	
 	public TourEntity(Tour tour) {
@@ -124,4 +129,14 @@ public class TourEntity implements Serializable {
 	public void setArtistic_attributes(String artistic_attributes) {
 		this.artistic_attributes = artistic_attributes;
 	}
+
+	public Date getLast_update() {
+		return last_update;
+	}
+
+	public void setLast_update(Date last_update) {
+		this.last_update = last_update;
+	}
+
+	
 }

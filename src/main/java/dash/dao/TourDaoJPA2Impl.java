@@ -1,6 +1,7 @@
 package dash.dao;
 
 import java.util.List;
+import java.util.Date;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -47,6 +48,8 @@ public class TourDaoJPA2Impl implements TourDao {
 	@Override
 	public Long createTour(TourEntity tour) {
 
+		tour.setLast_update(new Date());
+		
 		entityManager.persist(tour);
 		entityManager.flush();// force insert to receive the id of the user
 
@@ -64,6 +67,9 @@ public class TourDaoJPA2Impl implements TourDao {
 	
 	@Override
 	public void updateTour(TourEntity tour) {
+		
+		tour.setLast_update(new Date());
+		
 		//TODO think about partial update and full update
 		entityManager.merge(tour);
 	}

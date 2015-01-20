@@ -98,15 +98,25 @@ public class ArtObjectEntity implements Serializable {
 	
 	@Column(name = "tags")
 	private String tags;
+	
+	/** date of last update in the database */
+	@Column(name = "last_update")
+	private Date last_update;
+	
+	
 
 	public ArtObjectEntity(){}
 
-	public ArtObjectEntity(Long id, String title, String availability, BigDecimal location_lat, BigDecimal 	location_long, String artist_name,
-			String artist_dob, String	artist_pob, String medium, String artist_website, String dimensions, String date_made,
-			int mon_value, String location_campus, String location_name, boolean indoor, int counter, String type, String shape,
-			String color, String art_movement, String description, String image, String	tags) {
-
-		this.artwork_id = id;
+	public ArtObjectEntity(Long artwork_id, String title, String availability,
+			BigDecimal location_lat, BigDecimal location_long,
+			String artist_name, String artist_dob, String artist_pob,
+			String medium, String artist_website, String dimensions,
+			String date_made, int mon_value, String location_campus,
+			String location_name, boolean indoor, int counter, String type,
+			String shape, String color, String art_movement,
+			String description, String image, String tags, Date last_update) {
+		super();
+		this.artwork_id = artwork_id;
 		this.title = title;
 		this.availability = availability;
 		this.location_lat = location_lat;
@@ -120,7 +130,7 @@ public class ArtObjectEntity implements Serializable {
 		this.date_made = date_made;
 		this.mon_value = mon_value;
 		this.location_campus = location_campus;
-		this.location_name  = location_name;
+		this.location_name = location_name;
 		this.indoor = indoor;
 		this.counter = counter;
 		this.type = type;
@@ -130,6 +140,7 @@ public class ArtObjectEntity implements Serializable {
 		this.description = description;
 		this.image = image;
 		this.tags = tags;
+		this.last_update = last_update;
 	}
 
 	public ArtObjectEntity(ArtObject artObject) {
@@ -272,11 +283,11 @@ public class ArtObjectEntity implements Serializable {
 		this.indoor = indoor;
 	}
 
-	public Integer getCounter() {
+	public int getCounter() {
 		return counter;
 	}
 
-	public void setCounter(Integer counter) {
+	public void setCounter(int counter) {
 		this.counter = counter;
 	}
 
@@ -336,7 +347,11 @@ public class ArtObjectEntity implements Serializable {
 		this.tags = tags;
 	}
 
-	
-	
+	public Date getLast_update() {
+		return last_update;
+	}
 
+	public void setLast_update(Date last_update) {
+		this.last_update = last_update;
+	}
 }

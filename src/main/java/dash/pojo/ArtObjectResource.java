@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.util.List;
+import java.util.Date;
+import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -70,10 +72,12 @@ public class ArtObjectResource {
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public List<ArtObject> getArtObjects(
-			@QueryParam("orderByTitle") String orderByTitle)
+			@QueryParam("orderByTitle") String orderByTitle, @QueryParam("updated") String updated)
 					throws IOException,	AppException {
 		List<ArtObject> artObjects = artObjectService.getArtObjects(
-				orderByTitle);
+				orderByTitle, updated);
+		
+				
 		return artObjects;
 	}
 

@@ -3,6 +3,7 @@ package dash.dao;
 import java.util.List;
 
 import dash.pojo.ArtObject;
+import java.util.Date;
 
 /**
  *
@@ -17,7 +18,7 @@ public interface ArtObjectDao {
 	 *  @param orderByTitle If specified the list will be ordered by title.
 	 *  @return The list of all art objects.
 	 */
-	public List<ArtObjectEntity> getArtObjects(String orderByTitle);
+	public List<ArtObjectEntity> getArtObjects(String orderByTitle, Date updated);
 
 	/**
 	 * Returns a art object given its id.

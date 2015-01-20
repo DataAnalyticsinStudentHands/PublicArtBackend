@@ -13,6 +13,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.ws.rs.core.Response;
 
@@ -28,7 +31,6 @@ import dash.errorhandling.AppException;
 import dash.filters.AppConstants;
 import dash.helpers.NullAwareBeanUtilsBean;
 import dash.pojo.ArtObject;
-import dash.pojo.SampleObject;
 import dash.security.CustomPermission;
 import dash.security.GenericAclController;
 
@@ -94,8 +96,26 @@ ArtObjectService {
 
 		// ******************** Read related methods implementation **********************
 	@Override
-	public List<ArtObject> getArtObjects(String orderByTitle) throws AppException {
-
+	public List<ArtObject> getArtObjects(String orderByTitle, String updated) throws AppException {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+		Date dUpdated = null;
+		
+		if(updated!=null){
+			try {
+				
+				dUpdated = sdf.parse(updated);
+			} catch (ParseException e) {
+				
+				e.printStackTrace();
+				
+				throw new AppException(
+					Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), 500,
+					"'updated' param " + updated + " not parseable", "\n\n"
+							+ e.getMessage(), AppConstants.DASH_POST_URL);
+			}
+		}
+		
 		if(isorderByTitleParameterValid(orderByTitle)){
 			throw new AppException(
 					Response.Status.BAD_REQUEST.getStatusCode(),
@@ -103,9 +123,22 @@ ArtObjectService {
 					"Please set either ASC or DESC for the orderByTitle parameter",
 					null, AppConstants.DASH_POST_URL);
 		}
-		List<ArtObjectEntity> artObjects = artObjectDao.getArtObjects(orderByTitle);
-
-		return getArtObjectsFromEntities(artObjects);
+		List<ArtObjectEntity> artObjects = artObjectDao.getArtObjects(orderByTitle, dUpdated);
+		
+		
+		// artObjects is null when client artwork is up-to-date
+		if(artObjects!=null){
+		
+			return getArtObjectsFromEntities(artObjects);
+		}
+		else{
+			
+			throw new AppException(
+					Response.Status.NOT_MODIFIED.getStatusCode(),
+					304,
+					"Artwork is up-to-date",
+					null, AppConstants.DASH_POST_URL);
+		}
 	}
 
 	private boolean isorderByTitleParameterValid(
