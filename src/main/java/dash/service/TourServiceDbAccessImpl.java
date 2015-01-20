@@ -1,6 +1,9 @@
 package dash.service;
 
 import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
@@ -71,8 +74,28 @@ public class TourServiceDbAccessImpl extends ApplicationObjectSupport implements
 	}
 
 	@Override
-	public List<Tour> getTours(String orderByTitle) throws AppException {
+	public List<Tour> getTours(String orderByTitle, String updated) throws AppException {
 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+		Date dUpdated = null;
+		
+		if(updated!=null){
+			try {
+				
+				dUpdated = sdf.parse(updated);
+			} catch (ParseException e) {
+				
+				e.printStackTrace();
+				
+				throw new AppException(
+					Response.Status.INTERNAL_SERVER_ERROR.getStatusCode(), 500,
+					"'updated' param " + updated + " not parseable", "\n\n"
+							+ e.getMessage(), AppConstants.DASH_POST_URL);
+			}
+		}
+		
+		
+		
 		if(isorderByTitleParameterValid(orderByTitle)){
 			throw new AppException(
 					Response.Status.BAD_REQUEST.getStatusCode(),
@@ -80,9 +103,20 @@ public class TourServiceDbAccessImpl extends ApplicationObjectSupport implements
 					"Please set either ASC or DESC for the orderByTitle parameter",
 					null, AppConstants.DASH_POST_URL);
 		}
-		List<TourEntity> tours = tourDao.getTours(orderByTitle);
-
-		return getToursFromEntities(tours);
+		List<TourEntity> tours = tourDao.getTours(orderByTitle, dUpdated);
+		
+		if(tours!=null){
+			
+			return getToursFromEntities(tours);
+		}
+		else{
+			
+			throw new AppException(
+					Response.Status.NOT_MODIFIED.getStatusCode(),
+					304,
+					"Tours are up-to-date",
+					null, AppConstants.DASH_POST_URL);
+		}
 	}
 	
 	private boolean isorderByTitleParameterValid(

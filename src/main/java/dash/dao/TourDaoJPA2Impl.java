@@ -16,18 +16,29 @@ public class TourDaoJPA2Impl implements TourDao {
 	private EntityManager entityManager;
 	
 	@Override
-	public List<TourEntity> getTours(String orderByTitle) {
-		String sqlString = null;
-		if(orderByTitle != null){
-			sqlString = "SELECT o FROM TourEntity o"
-					+ " ORDER BY o.tour_title " + orderByTitle;
-		} else {
-			sqlString = "SELECT o FROM TourEntity o";
+	public List<TourEntity> getTours(String orderByTitle, Date updated) {
+		
+		Date maxResult = entityManager.createQuery("SELECT o FROM TourEntity o WHERE o.last_update = (SELECT MAX(o.last_update) FROM TourEntity o)",
+				TourEntity.class).setMaxResults(1).getSingleResult().getLast_update();
+		
+		if(updated==null || maxResult.after(updated)){
+		
+			String sqlString = null;
+			if(orderByTitle != null){
+				sqlString = "SELECT o FROM TourEntity o"
+						+ " ORDER BY o.tour_title " + orderByTitle;
+			} else {
+				sqlString = "SELECT o FROM TourEntity o";
+			}
+			TypedQuery<TourEntity> query = entityManager.createQuery(sqlString,
+					TourEntity.class);
+	
+			return query.getResultList();
 		}
-		TypedQuery<TourEntity> query = entityManager.createQuery(sqlString,
-				TourEntity.class);
-
-		return query.getResultList();
+		else{
+			
+			return null;
+		}
 	}
 
 	@Override

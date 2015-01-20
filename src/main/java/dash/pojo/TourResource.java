@@ -59,10 +59,10 @@ public class TourResource {
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
 	public List<Tour> getTours(
-			@QueryParam("orderByTitle") String orderByTitle)
+			@QueryParam("orderByTitle") String orderByTitle, @QueryParam("updated") String updated)
 					throws IOException,	AppException {
 		List<Tour> tours = tourService.getTours(
-				orderByTitle);
+				orderByTitle, updated);
 		return tours;
 	}
 	

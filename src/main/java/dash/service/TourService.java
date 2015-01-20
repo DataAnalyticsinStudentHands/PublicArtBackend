@@ -11,7 +11,7 @@ public interface TourService {
 
 	public Long createTour(Tour tour) throws AppException;
 	
-	public List<Tour> getTours(String orderByTitle) throws AppException;
+	public List<Tour> getTours(String orderByTitle, String updated) throws AppException;
 	
 	@PreAuthorize("hasPermission(#user, 'WRITE') or hasRole('ROLE_ADMIN')")
 	public void updatePartiallyTour(Tour tour) throws AppException;
