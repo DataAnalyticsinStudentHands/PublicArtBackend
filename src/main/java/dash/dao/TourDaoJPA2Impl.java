@@ -58,8 +58,11 @@ public class TourDaoJPA2Impl implements TourDao {
 
 	@Override
 	public Long createTour(TourEntity tour) {
+		
+		Date curDate = new Date();
+		int milliOffset = curDate.getTimezoneOffset()*60*1000;
 
-		tour.setLast_update(new Date());
+		tour.setLast_update(new Date(curDate.getTime() + milliOffset));
 		
 		entityManager.persist(tour);
 		entityManager.flush();// force insert to receive the id of the user
@@ -79,7 +82,10 @@ public class TourDaoJPA2Impl implements TourDao {
 	@Override
 	public void updateTour(TourEntity tour) {
 		
-		tour.setLast_update(new Date());
+		Date curDate = new Date();
+		int milliOffset = curDate.getTimezoneOffset()*60*1000;
+
+		tour.setLast_update(new Date(curDate.getTime() + milliOffset));
 		
 		//TODO think about partial update and full update
 		entityManager.merge(tour);

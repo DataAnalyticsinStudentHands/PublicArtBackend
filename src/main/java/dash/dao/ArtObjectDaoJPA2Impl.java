@@ -86,7 +86,10 @@ ArtObjectDao {
 	@Override
 	public Long createArtObject(ArtObjectEntity artObject) {
 
-		artObject.setLast_update(new Date());
+		Date curDate = new Date();
+		int milliOffset = curDate.getTimezoneOffset()*60*1000;
+
+		artObject.setLast_update(new Date(curDate.getTime() + milliOffset));
 		
 		entityManager.persist(artObject);
 		entityManager.flush();// force insert to receive the id of the user
@@ -98,7 +101,10 @@ ArtObjectDao {
 	@Override
 	public void updateArtObject(ArtObjectEntity artObject) {
 		
-		artObject.setLast_update(new Date());
+		Date curDate = new Date();
+		int milliOffset = curDate.getTimezoneOffset()*60*1000;
+
+		artObject.setLast_update(new Date(curDate.getTime() + milliOffset));
 		
 		//TODO think about partial update and full update
 		entityManager.merge(artObject);
