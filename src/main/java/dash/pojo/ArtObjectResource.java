@@ -189,7 +189,7 @@ public class ArtObjectResource {
 		//TODO: Generate directory if not set
 		//if(application.getDocument_folder()==null)	
 		String uploadedFileLocation = AppConstants.APPLICATION_UPLOAD_LOCATION_FOLDER+"/"
-				+ artObject.getId()+"/" + fileDetail.getFileName().replaceAll("%20", "_").toLowerCase();
+				+ artObject.getId()+"/" + fileDetail.getFileName().replaceAll("%20", "_").replaceAll(".png", "").toLowerCase();
 		
 		System.out.println("Upload file location: " + uploadedFileLocation);
 		// save it

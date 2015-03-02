@@ -17,9 +17,11 @@ import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import javax.imageio.ImageIO;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
+import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.ApplicationObjectSupport;
 import org.springframework.security.acls.model.MutableAclService;
@@ -283,7 +285,7 @@ ArtObjectService {
 			throws AppException {
 
 		try {
-			File file = new File(uploadedFileLocation);
+			File file = new File(uploadedFileLocation + ".png");
 			file.getParentFile().mkdirs();
 			
 			if(!file.getParentFile().exists()){
@@ -294,12 +296,16 @@ ArtObjectService {
 			int read = 0;
 			byte[] bytes = new byte[1024];
 
-			out = new FileOutputStream(new File(uploadedFileLocation));
+			out = new FileOutputStream(new File(uploadedFileLocation + ".png"));
 			while ((read = uploadedInputStream.read(bytes)) != -1) {
 				out.write(bytes, 0, read);
 			}
 			out.flush();
 			out.close();
+			
+			File file2 = new File(uploadedFileLocation + "_thumb.png");
+			//file.getParentFile().mkdirs();
+			ImageIO.write(Scalr.resize(ImageIO.read(file), 150), "png", file2);
 		} catch (IOException e) {
 
 			throw new AppException(
@@ -334,8 +340,10 @@ ArtObjectService {
 	@Override
 	public void deleteUploadFile(String uploadedFileLocation) throws AppException {
 		Path path = Paths.get(uploadedFileLocation);
+		Path path2 = Paths.get(uploadedFileLocation.replaceAll(".png", "_thumb.png"));
 		try {
 		    Files.delete(path);
+		    Files.delete(path2);
 		} catch (NoSuchFileException x) {
 			x.printStackTrace();
 			throw new AppException(Response.Status.NOT_FOUND.getStatusCode(),
