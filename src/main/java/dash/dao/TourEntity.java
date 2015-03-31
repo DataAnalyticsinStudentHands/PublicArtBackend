@@ -45,34 +45,9 @@ public class TourEntity implements Serializable {
 	/** date of last update in the database */
 	@Column(name = "last_update")
 	private Date last_update;
-
-	public TourEntity(Long tour_id, String tour_title, String artwork_included,
-			int times_taken, String creator, String date_created,
-			String artistic_attributes, Date last_update) {
-		super();
-		this.tour_id = tour_id;
-		this.tour_title = tour_title;
-		this.artwork_included = artwork_included;
-		this.times_taken = times_taken;
-		this.creator = creator;
-		this.date_created = date_created;
-		this.artistic_attributes = artistic_attributes;
-		this.last_update = last_update;
-	}
-
-	public TourEntity(){}
 	
-	public TourEntity(Tour tour) {
-		try {
-			BeanUtils.copyProperties(this, tour);
-		} catch ( IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch ( InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	@Column(name = "description")
+	private String description;
 
 	public Long getTour_id() {
 		return tour_id;
@@ -138,5 +113,40 @@ public class TourEntity implements Serializable {
 		this.last_update = last_update;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	
+	public TourEntity(){}
+	
+	public TourEntity(Tour tour) {
+		try {
+			BeanUtils.copyProperties(this, tour);
+		} catch ( IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch ( InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public TourEntity(Long tour_id, String tour_title, String artwork_included,
+			int times_taken, String creator, String date_created,
+			String artistic_attributes, Date last_update, String description) {
+		super();
+		this.tour_id = tour_id;
+		this.tour_title = tour_title;
+		this.artwork_included = artwork_included;
+		this.times_taken = times_taken;
+		this.creator = creator;
+		this.date_created = date_created;
+		this.artistic_attributes = artistic_attributes;
+		this.last_update = last_update;
+		this.description = description;
+	}
 }

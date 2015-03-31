@@ -43,34 +43,9 @@ public class Tour implements  Serializable, IAclObject{
 	
 	@XmlElement(name = "artistic_attributes")
 	private String artistic_attributes;
-
-	public Tour(Long tour_id, String tour_title, String artwork_included,
-			int times_taken, String creator, String date_created,
-			String artistic_attributes) {
-		
-		super();
-		this.tour_id = tour_id;
-		this.tour_title = tour_title;
-		this.artwork_included = artwork_included;
-		this.times_taken = times_taken;
-		this.creator = creator;
-		this.date_created = date_created;
-		this.artistic_attributes = artistic_attributes;
-	}
 	
-	public Tour(){}
-	
-	public Tour(TourEntity tourEntity) {
-		try {
-			BeanUtils.copyProperties(this, tourEntity);
-		} catch ( IllegalAccessException e) {
-
-			e.printStackTrace();
-		} catch ( InvocationTargetException e) {
-
-			e.printStackTrace();
-		}
-	}
+	@XmlElement(name = "description")
+	private String description;
 
 	public Long getTour_id() {
 		return tour_id;
@@ -126,6 +101,42 @@ public class Tour implements  Serializable, IAclObject{
 
 	public void setArtistic_attributes(String artistic_attributes) {
 		this.artistic_attributes = artistic_attributes;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	public Tour(){}
+	
+	public Tour(TourEntity tourEntity) {
+		try {
+			BeanUtils.copyProperties(this, tourEntity);
+		} catch ( IllegalAccessException e) {
+
+			e.printStackTrace();
+		} catch ( InvocationTargetException e) {
+
+			e.printStackTrace();
+		}
+	}
+
+	public Tour(Long tour_id, String tour_title, String artwork_included,
+			int times_taken, String creator, String date_created,
+			String artistic_attributes, String description) {
+		super();
+		this.tour_id = tour_id;
+		this.tour_title = tour_title;
+		this.artwork_included = artwork_included;
+		this.times_taken = times_taken;
+		this.creator = creator;
+		this.date_created = date_created;
+		this.artistic_attributes = artistic_attributes;
+		this.description = description;
 	}
 
 	@Override
