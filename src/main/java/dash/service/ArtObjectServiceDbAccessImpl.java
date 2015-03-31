@@ -305,7 +305,7 @@ ArtObjectService {
 			
 			File file2 = new File(uploadedFileLocation + "_thumb.png");
 			//file.getParentFile().mkdirs();
-			ImageIO.write(Scalr.resize(ImageIO.read(file), 150), "png", file2);
+			ImageIO.write(Scalr.resize(ImageIO.read(file), 200), "png", file2);
 		} catch (IOException e) {
 
 			throw new AppException(
