@@ -23,6 +23,11 @@ import dash.security.IAclObject;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Tour implements  Serializable, IAclObject{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3156934595437916970L;
+
 	@XmlElement(name = "tour_id")
 	private Long tour_id;
 	

@@ -2,8 +2,6 @@ package dash.pojo;
 
 import java.io.IOException;
 import java.util.List;
-import java.io.File;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;

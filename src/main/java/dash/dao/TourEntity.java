@@ -2,7 +2,6 @@ package dash.dao;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
-import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -18,6 +17,11 @@ import dash.pojo.Tour;
 @Entity
 @Table(name="tours")
 public class TourEntity implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4561874079198167405L;
 
 	@Id
 	@GeneratedValue

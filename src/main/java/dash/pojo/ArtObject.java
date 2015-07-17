@@ -13,7 +13,6 @@ import dash.security.IAclObject;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * Plain class for handling a art object.
@@ -23,6 +22,11 @@ import java.util.Date;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ArtObject implements  Serializable, IAclObject {	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4858443908746803429L;
 
 	@XmlElement(name = "artwork_id")
 	private Long artwork_id;	

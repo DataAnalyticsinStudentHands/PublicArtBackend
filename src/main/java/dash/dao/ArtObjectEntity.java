@@ -24,6 +24,11 @@ import dash.pojo.ArtObject;
 @Table(name="artwork")
 public class ArtObjectEntity implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1081147088439882441L;
+
 	/** id of the object */
 	@Id
 	@GeneratedValue
