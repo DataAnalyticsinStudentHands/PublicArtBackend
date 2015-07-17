@@ -12,13 +12,16 @@
 		</filter>
   	</appender>
 
-	<appender name="FILE"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>/var/log/tomcat7/artapp-backend.log</file>
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>/var/log/tomcat7/webapps/artapp-backend.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<!-- daily rollover -->
-			<fileNamePattern>artapp-backend.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<!-- rollover daily -->
+			<fileNamePattern>/var/logs/tomcat/webapps/artapp-backend-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
 
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>5MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            
 			<!-- keep 30 days' worth of history -->
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>

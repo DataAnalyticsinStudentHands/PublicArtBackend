@@ -2,10 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<version>0.0.1</version>
-	<groupId>RESTFUL-WS</groupId>
+	<groupId>ArtApp</groupId>
 	<packaging>war</packaging>
-	<name>RESTFUL-WS</name>
-	<description>REST-FUL web services for DASH backend</description>
+	<name>ArtAppBackend</name>
+	<description>REST-FUL web services for ArtApp backend</description>
 
 	<properties>
 		<spring.version>4.0.3.RELEASE</spring.version>
@@ -272,5 +272,5 @@
 		</plugins>
 	</build>
 	
-	<artifactId>ArtManagementApp</artifactId>
+	<artifactId>ArtApp</artifactId>
 </project>  
