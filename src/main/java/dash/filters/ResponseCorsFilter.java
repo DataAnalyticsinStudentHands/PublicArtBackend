@@ -33,7 +33,7 @@ public class ResponseCorsFilter implements Filter {
 	}
 
 	private void addHeadersFor200Response(final HttpServletResponse response) {
-		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.addHeader("Access-Control-Allow-Origin", "http://housuggest.org");
 		response.addHeader("Access-Control-Allow-Methods",
 				"GET, POST, PUT, OPTIONS, DELETE");
 		response.addHeader("Access-Control-Allow-Credentials", "true");
