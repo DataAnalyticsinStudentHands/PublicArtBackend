@@ -35,23 +35,26 @@ public class ResponseCorsFilter implements Filter {
 			// Get client's origin
 			HttpServletRequest origRequest = (HttpServletRequest) servletRequest;
 			
-			if (matchOrigin(origRequest.getHeader("origin"))) {
-				addHeadersFor200Response(alteredResponse);
+			String matchedOrigin = matchOrigin(origRequest.getHeader("origin"));
+			if (matchedOrigin != null) {
+				addHeadersFor200Response(alteredResponse, matchedOrigin);
+			} else {
+				addHeadersFor200Response(alteredResponse, "*");
 			}
 		}
 		filterChain.doFilter(servletRequest, servletResponse);
 	}
 	
-	private boolean matchOrigin(String origin) {
+	private String matchOrigin(String origin) {
 		
-		if (!origin.matches("http://www.housuggest.org|http://housuggest.org"))
-			return false;
+		if (!origin.matches("http://www.housuggest.org|http://housuggest.org|http://localhost:8100"))
+			return null;
 		
-	  return true;
+	  return origin;
 	}
 	
-	private void addHeadersFor200Response(final HttpServletResponse response) {
-		response.addHeader("Access-Control-Allow-Origin", "http://www.housuggest.org");
+	private void addHeadersFor200Response(final HttpServletResponse response, String origin) {
+		response.addHeader("Access-Control-Allow-Origin", origin);
 		
 		response.addHeader("Access-Control-Allow-Methods",
 				"GET, POST, PUT, OPTIONS, DELETE");
