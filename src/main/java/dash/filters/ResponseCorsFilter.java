@@ -27,26 +27,35 @@ public class ResponseCorsFilter implements Filter {
 	@Override
 	public void doFilter(final ServletRequest servletRequest, final ServletResponse servletResponse, final FilterChain filterChain) throws IOException, ServletException {
 		if (servletResponse instanceof HttpServletResponse) {
-			
-			
 	        
 			final HttpServletResponse alteredResponse = ((HttpServletResponse) servletResponse);
 			
 			// Get client's origin
 			HttpServletRequest origRequest = (HttpServletRequest) servletRequest;
 			
+			//try to match origin with list
 			String matchedOrigin = matchOrigin(origRequest.getHeader("origin"));
 			if (matchedOrigin != null) {
+				//matched origin will be attached to response header
 				addHeadersFor200Response(alteredResponse, matchedOrigin);
 			} else {
+				//fall back to "*"
 				addHeadersFor200Response(alteredResponse, "*");
 			}
 		}
 		filterChain.doFilter(servletRequest, servletResponse);
 	}
 	
+	/**
+	 * Trying to match the incoming request with a list of domain names. If the origin of the request is in the list it 
+	 * will return the same origin, otherwise the return will be null.
+	 * 
+	 * @param origin The request origin.
+	 * @return
+	 */
 	private String matchOrigin(String origin) {
 		
+		//list of origins to match
 		if (!origin.matches("http://www.housuggest.org|http://housuggest.org|http://localhost:8100"))
 			return null;
 		
