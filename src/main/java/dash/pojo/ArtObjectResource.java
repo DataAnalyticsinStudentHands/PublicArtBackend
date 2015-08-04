@@ -80,8 +80,7 @@ public class ArtObjectResource {
 	@GET
 	@Path("{id}")
 	@Produces({ MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML })
-	public Response getArtObjectById(@PathParam("id") Long id,
-			@QueryParam("detailed") boolean detailed)
+	public Response getArtObjectById(@PathParam("id") Long id)
 					throws IOException,	AppException {
 		ArtObject artObjectById = artObjectService.getArtObjectById(id);
 		return Response

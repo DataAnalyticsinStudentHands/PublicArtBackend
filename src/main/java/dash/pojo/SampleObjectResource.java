@@ -120,8 +120,7 @@ public class SampleObjectResource {
 	@GET
 	@Path("{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getSampleObjectById(@PathParam("id") Long id,
-			@QueryParam("detailed") boolean detailed) throws IOException,
+	public Response getSampleObjectById(@PathParam("id") Long id) throws IOException,
 			AppException {
 		SampleObject sampleObjectById = sampleObjectService
 				.getSampleObjectById(id);

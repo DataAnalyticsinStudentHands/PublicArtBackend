@@ -156,8 +156,7 @@ public class UsersResource {
 	@GET
 	@Path("{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getUserById(@PathParam("id") Long id,
-			@QueryParam("detailed") boolean detailed) throws IOException,
+	public Response getUserById(@PathParam("id") Long id) throws IOException,
 			AppException {
 		User userById = userService.getUserById(id);
 		return Response.status(200).entity(new GenericEntity<User>(userById) {
